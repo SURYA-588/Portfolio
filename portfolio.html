@@ -33,7 +33,7 @@
   text-decoration: none !important;
 }
 /* Header/taskbar alignment fix for mobile */
-@media (max-width: 700px) {
+@media (max-width: 200px) {
   header {
     flex-direction: row !important;
     align-items: center !important;
@@ -495,9 +495,6 @@
 </script>
     </div>
   </section>
-<footer style="text-align:center; color:#b49aef; font-size:1em; margin:2em 0 1em 0; font-weight:600; letter-spacing:0.5px; display:block; border-top:1px solid #292344; padding-top:1em;">
-  @2025 - Developed and Maintained by SURYA SM
-</footer>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script>
     var typed = new Typed('.typewriter', {
@@ -713,15 +710,15 @@
   <h2>Skills</h2>
   <h3>(Drag & Drop Demo)</h3>
   <div class="demo">
-    <div class="box">Adaptability</div>
-    <div class="box">Leadership</div>
-    <div class="box">Teamwork</div>
-    <div class="box">HTML</div>
-    <div class="box">CSS</div>
-    <div class="box">Javascript</div>
-    <div class="box">React.js</div>
-    <div class="box">UI/UX</div>
-    <div class="box">Graphic Design</div>
+  <div class="box">Adaptability</div>
+  <div class="box">Leadership</div>
+  <div class="box">Teamwork</div>
+  <div class="box">HTML</div>
+  <div class="box">CSS</div>
+  <div class="box">Javascript</div>
+  <div class="box">React.js</div>
+  <div class="box">UI/UX</div>
+  <div class="box graphic-design">Graphic Design</div>
   </div>
 </div>
 
@@ -750,22 +747,27 @@
   background: var(--color-bg, #070b25);
   }
   .box {
-  background: #7F5AF0;
-  text-align: center;
-  width: 160px;
-  height: 80px;
-  line-height: 80px;
-  color: #fff;
-  position: absolute;
-  border-radius: 32px;
-  font-weight: 700;
-  font-size: 1.1em;
-  box-shadow: 0 4px 24px rgba(127,90,240,0.13), 0 1.5px 0 #fff inset;
-  border: 2px solid #fff;
-  cursor: grab;
-  user-select: none;
-  letter-spacing: 0.5px;
-  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s, background 0.2s;
+    touch-action: none;
+    pointer-events: auto;
+    background: #7F5AF0;
+    text-align: center;
+    width: 160px;
+    height: 80px;
+    line-height: 80px;
+    color: #fff;
+    position: absolute;
+    border-radius: 32px;
+    font-weight: 700;
+    font-size: 1.1em;
+    box-shadow: 0 4px 24px rgba(127,90,240,0.13), 0 1.5px 0 #fff inset;
+    border: 2px solid #fff;
+    cursor: grab;
+    user-select: none;
+    letter-spacing: 0.5px;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .box.graphic-design {
+    width: 220px !important;
   }
   .box:active {
   box-shadow: 0 8px 32px rgba(44,183,167,0.18);
@@ -785,58 +787,84 @@
       font-size: 1em;
     }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 200px) {
+    .skills-container {
+      width: 70vw;
+      min-width: 0;
+      max-width: 80vw;
+      min-height: 160px;
+      margin: 0 0 0 2vw;
+      padding: 8px 0 24px 0;
+      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      box-sizing: border-box;
+    }
     .demo {
+      width: 100vw;
+      min-height: 220px;
       height: 220px;
-      min-width: 98vw;
-      max-width: 99vw;
+      position: relative;
       padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
     }
     .box {
-      width: 90px;
-      height: 40px;
-      line-height: 40px;
-      font-size: 0.9em;
+      width: 110px;
+      height: 48px;
+      line-height: 48px;
+      font-size: 1em;
+    }
+    .box.graphic-design {
+      width: 180px !important;
     }
   }
 </style>
 
 <script>
-  // GSAP Draggable for Skills Demo
-  // CDN for GSAP and Draggable
-  if (!window.Draggable) {
-    var gsapScript = document.createElement('script');
-    gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
-    document.head.appendChild(gsapScript);
-    var dragScript = document.createElement('script');
-    dragScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js';
-    document.head.appendChild(dragScript);
-    dragScript.onload = function() {
-      makeDraggableSkills();
-    };
-  } else {
-    makeDraggableSkills();
-  }
-
-  function makeDraggableSkills() {
-    if (!window.Draggable) return;
-    var boxes = document.querySelectorAll('.demo .box');
-    var demo = document.querySelector('.demo');
-    // Randomize initial positions for fun
-    boxes.forEach(function(box, i) {
-      box.style.left = (10 + Math.random() * (demo.offsetWidth - 120)) + 'px';
-      box.style.top = (10 + Math.random() * (demo.offsetHeight - 60)) + 'px';
-    });
-    Draggable.create('.box', {
-      bounds: '.demo',
-      inertia: true,
-      onDrag: function() {
-        if (!this.hitTest('.demo', '100%')) {
-          this.endDrag();
+  // GSAP Draggable for Skills Demo with mobile support
+  document.addEventListener('DOMContentLoaded', function() {
+    function loadScript(src, onload) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = onload;
+      document.head.appendChild(s);
+    }
+    function makeDraggableSkills() {
+      if (!window.Draggable) return;
+      var boxes = document.querySelectorAll('.demo .box');
+      var demo = document.querySelector('.demo');
+      boxes.forEach(function(box, i) {
+        box.style.left = (10 + Math.random() * (demo.offsetWidth - 120)) + 'px';
+        box.style.top = (10 + Math.random() * (demo.offsetHeight - 60)) + 'px';
+      });
+      Draggable.create('.box', {
+        bounds: '.demo',
+        inertia: true,
+        allowNativeTouchScrolling: false,
+        minimumMovement: 2,
+        onPress: function() {
+          this.startX = this.x;
+          this.startY = this.y;
+        },
+        onDrag: function() {
+          if (!this.hitTest('.demo', '100%')) {
+            this.endDrag();
+          }
         }
-      }
-    });
-  }
+      });
+    }
+    if (!window.Draggable) {
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', function() {
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js', makeDraggableSkills);
+      });
+    } else {
+      makeDraggableSkills();
+    }
+  });
 </script>
 <body>
 <section class="education-section" id="education">
@@ -1634,29 +1662,9 @@
   }
 </style>
 </head>
-<body>
 
-<div class="contact-container">
-  <div class="info-box">
-    <h2>Contact Information</h2>
-    <div class="info-row">
-      <span class="info-icon email-icon"><i class="fa-regular fa-envelope"></i></span>
-      <div>
-        <div class="info-label">Email</div>
-        <div class="info-value">suryasrivan@gmail.com</div>
-      </div>
-    </div>
-    <div class="info-row">
-      <span class="info-icon location-icon"><i class="fa-solid fa-location-dot"></i></span>
-      <div>
-        <div class="info-label">Location</div>
-        <div class="info-value">Namakkal, Tamilnadu</div>
-      </div>
-    </div>
-  </div>
-</div>
 <footer class="footer">
-  <p>&copy; @2025 SURYA-Maintained and Developed by SURYA SM.</p>
+  <p>&copy;2025-Developed and Maintained by SURYA SM.</p>
 </footer>
 <style>
   body {
